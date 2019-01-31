@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:snippet=".views.ReaderActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/reader.toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary">
+
+        <TextView
+            android:id="@+id/reader.toolbar.text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+    </android.support.v7.widget.Toolbar>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/reader.viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/reader.toolbar">
+
+        <!--<android.support.v4.view.PagerTitleStrip-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_gravity="top"-->
+        <!--android:paddingTop="5dp"-->
+        <!--android:paddingBottom="5dp" />-->
+    </android.support.v4.view.ViewPager>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:id="@+id/reader.highlight.holder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentEnd="true">
+
+            <ImageView
+                android:id="@+id/reader.fab.highlight.blue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:contentDescription="blue"
+                android:src="@drawable/ic_highlight_blue"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/reader.fab.highlight.red"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:contentDescription="red"
+                android:src="@drawable/ic_highlight_red"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/reader.fab.highlight.green"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:contentDescription="green"
+                android:src="@drawable/ic_highlight_green"
+                android:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/reader.fab.highlight.yellow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="2dp"
+                android:contentDescription="yellow"
+                android:src="@drawable/ic_highlight_yellow"
+                android:visibility="visible" />
+
+        </LinearLayout>
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/reader.fab.highlight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_highlight"
+            android:layout_below="@id/reader.highlight.holder"
+            android:layout_margin="2dp"/>
+    </RelativeLayout>
+</RelativeLayout>
