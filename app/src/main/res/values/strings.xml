@@ -2,10 +2,15 @@
     <string name="app_name">Njia Salama</string>
     <string name="title_activity_reader">ReaderActivity</string>
 
-    <string name="main.drawer.settings">Settings</string>
-    <string name="main.drawer.update">Update</string>
-    <string name="main.drawer.about">About&#8230;</string>
+    <string name="menu_search">Search</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_about">About&#8230;</string>
 
-    <string name="main.drawer.open">Open navigation drawer</string>
-    <string name="main.drawer.close">Close navigation drawer</string>
+    <string name="color_blue">Blue</string>
+    <string name="color_red">Red</string>
+    <string name="color_green">Green</string>
+    <string name="color_yellow">Yellow</string>
+
+    <string name="main_drawer_open">Open navigation drawer</string>
+    <string name="main_drawer_close">Close navigation drawer</string>
 </resources>

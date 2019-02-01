@@ -3,14 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/menu.search"
-        android:title="Search"
+        android:icon="@drawable/ic_search"
+        android:title="@string/menu_search"
         app:showAsAction="never" />
-    <item
-        android:id="@+id/menu.settings"
-        android:title="Settings"
-        app:showAsAction="never" />
+    <!--<item-->
+        <!--android:id="@+id/menu.settings"-->
+        <!--android:icon="@drawable/ic_settings"-->
+        <!--android:title="@string/menu_settings"-->
+        <!--app:showAsAction="never" />-->
     <item
         android:id="@+id/menu.about"
-        android:title="About..."
+        android:icon="@drawable/ic_about"
+        android:title="@string/menu_about"
         app:showAsAction="never" />
 </menu>

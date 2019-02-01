@@ -15,7 +15,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,16 +58,7 @@ public class ReaderPagerAdapter extends PagerAdapter {
         this.mGestureDetector = new GestureDetector(readerActivity, doubleClickListener);
         this.mGestureDetector.setOnDoubleTapListener(doubleClickListener);
         this.mRestoredHighlights = mHighlighter.getHighlights();
-
-        ArrayList<ImageView> highlightButtons = readerActivity.getHighlightButtons();
-        for (ImageView button : highlightButtons) {
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    permanentHighlight(v.getId());
-                }
-            });
-        }
+        this.mReaderActivity.showHighlightButton(false);
     }
 
     @Override
@@ -86,7 +76,7 @@ public class ReaderPagerAdapter extends PagerAdapter {
     public Object instantiateItem(@NonNull final ViewGroup container, final int position) {
         if (mViewPager == null) {
             mViewPager = (ViewPager) container;
-            mReaderActivity.setToolbarText(mChapters[position].getChapterTitle() + ": " + mChapters[position].getChapterIntro());
+            mReaderActivity.setToolbarText(mChapters[position].getChapterTitle());
             mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int i, float v, int i1) {
@@ -97,7 +87,7 @@ public class ReaderPagerAdapter extends PagerAdapter {
                 public void onPageSelected(int i) {
                     unHighlightDClickedWord();
                     mHighlightActive = false;
-                    mReaderActivity.setToolbarText(mChapters[i].getChapterTitle() + ": " + mChapters[i].getChapterIntro());
+                    mReaderActivity.setToolbarText(mChapters[i].getChapterTitle());
                 }
 
                 @Override
@@ -149,6 +139,7 @@ public class ReaderPagerAdapter extends PagerAdapter {
                 spannableString.setSpan(mBackgroundColorSpan, mHighlightBounds.getStart(), mHighlightBounds.getEnd(), 0);
                 spannableString.setSpan(mForegroundColorSpan, mHighlightBounds.getStart(), mHighlightBounds.getEnd(), 0);
                 mWorkingTextView.setText(spannableString);
+                mReaderActivity.showHighlightButton(true);
             }
         }
     }
@@ -202,18 +193,19 @@ public class ReaderPagerAdapter extends PagerAdapter {
             spannableString.removeSpan(mBackgroundColorSpan);
             spannableString.removeSpan(mForegroundColorSpan);
             mWorkingTextView.setText(spannableString);
+            mReaderActivity.showHighlightButton(false);
         }
     }
 
-    private void permanentHighlight(int highlightId) {
+    public void permanentHighlight(int highlightId) {
         if (mHighlightBounds != null) {
             int colorInt;
             switch (highlightId) {
                 case R.id.reader_fab_highlight_blue:
-                    colorInt = Color.BLUE;
+                    colorInt = Color.CYAN;
                     break;
                 case R.id.reader_fab_highlight_red:
-                    colorInt = Color.RED;
+                    colorInt = Color.MAGENTA;
                     break;
                 case R.id.reader_fab_highlight_green:
                     colorInt = Color.GREEN;
@@ -226,10 +218,12 @@ public class ReaderPagerAdapter extends PagerAdapter {
             BackgroundColorSpan highlightSpan = new BackgroundColorSpan(colorInt);
             SpannableString spannableString = SpannableString.valueOf(mWorkingTextView.getText());
             spannableString.setSpan(highlightSpan, mHighlightBounds.getStart(), mHighlightBounds.getEnd(), 0);
+            spannableString.removeSpan(mForegroundColorSpan);
             mWorkingTextView.setText(spannableString);
             mHighlighter.saveHighlight(mWorkingIndex, mHighlightBounds, colorInt);
             mHighlightBounds = null;
             mHighlightActive = false;
+            mReaderActivity.showHighlightButton(false);
         }
     }
 
@@ -240,10 +234,8 @@ public class ReaderPagerAdapter extends PagerAdapter {
                 int colorInt = highlightInfo.getColorInt();
                 VerseBounds verseBounds = highlightInfo.getVerseBounds();
                 final BackgroundColorSpan restoredHighlight = new BackgroundColorSpan(colorInt);
-                final ForegroundColorSpan whiteTextSpan = new ForegroundColorSpan(Color.WHITE);
                 SpannableString spannableString = SpannableString.valueOf(textView.getText());
                 spannableString.setSpan(restoredHighlight, verseBounds.getStart(), verseBounds.getEnd(), 0);
-                spannableString.setSpan(whiteTextSpan, verseBounds.getStart(), verseBounds.getEnd(), 0);
                 textView.setText(spannableString);
             }
         }

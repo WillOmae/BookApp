@@ -2,17 +2,18 @@ package dev.wilburomae.bookapp.views;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -23,9 +24,7 @@ import dev.wilburomae.bookapp.dataaccesslayer.Search;
 
 public class SearchDialogFragment extends DialogFragment {
     private EditText mSearchInput;
-    private RecyclerView mResultsList;
     private RecyclerView.Adapter mResultsAdapter;
-    private RecyclerView.LayoutManager mResultsLayoutManager;
     private ArrayList<Search.SearchResult> mResultSet = new ArrayList<>();
     private Context mContext;
 
@@ -36,12 +35,14 @@ public class SearchDialogFragment extends DialogFragment {
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
         View layoutView = layoutInflater.inflate(R.layout.search, null);
         final ImageButton searchButton = (ImageButton) layoutView.findViewById(R.id.search_search);
+        final LinearLayout linearLayout = (LinearLayout) layoutView.findViewById(R.id.search_results);
+        linearLayout.setVisibility(View.GONE);
         mContext = getActivity().getApplicationContext();
 
         mSearchInput = (EditText) layoutView.findViewById(R.id.search_text);
-        mResultsList = (RecyclerView) layoutView.findViewById(R.id.search_results_list);
-        mResultsLayoutManager = new LinearLayoutManager(mContext);
-        mResultsAdapter = new SearchResultsAdapter(mContext, mResultSet, (ReaderActivity) getActivity());
+        RecyclerView mResultsList = (RecyclerView) layoutView.findViewById(R.id.search_results_list);
+        RecyclerView.LayoutManager mResultsLayoutManager = new LinearLayoutManager(mContext);
+        mResultsAdapter = new SearchResultsAdapter(mContext, mResultSet, (View.OnClickListener) getActivity());
         mResultsList.setHasFixedSize(true);
         mResultsList.setLayoutManager(mResultsLayoutManager);
         mResultsList.setAdapter(mResultsAdapter);
@@ -62,13 +63,16 @@ public class SearchDialogFragment extends DialogFragment {
                     String toSearch = mSearchInput.getText().toString();
                     ArrayList<Search.SearchResult> searchResults = Search.search(toSearch);
                     if (searchResults.size() > 0) {
+                        linearLayout.setVisibility(View.VISIBLE);
                         mResultSet.addAll(searchResults);
                         mResultsAdapter.notifyDataSetChanged();
                     } else {
                         Toast.makeText(mContext, "nothing found", Toast.LENGTH_SHORT).show();
+                        linearLayout.setVisibility(View.GONE);
                     }
                 } else {
                     Toast.makeText(mContext, "empty search input", Toast.LENGTH_SHORT).show();
+                    linearLayout.setVisibility(View.GONE);
                 }
             }
         });

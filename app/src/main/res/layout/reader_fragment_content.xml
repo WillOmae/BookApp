@@ -3,22 +3,23 @@
     android:id="@+id/reader.fragment.content.scrollView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    android:scrollbars="none">
+    android:scrollbars="none"
+    android:background="#ffffff">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#ffffff">
 
         <TextView
             android:id="@+id/reader.fragment.content.title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:textColor="#202020"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="#202020"/>
 
         <TextView
             android:id="@+id/reader.fragment.content.textView"
@@ -26,6 +27,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:textColor="#505050" />
+            android:textColor="#505050"/>
     </LinearLayout>
 </ScrollView>

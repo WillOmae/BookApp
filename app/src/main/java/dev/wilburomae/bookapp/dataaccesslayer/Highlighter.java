@@ -2,8 +2,6 @@ package dev.wilburomae.bookapp.dataaccesslayer;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -67,12 +65,6 @@ public class Highlighter {
         this.context = context;
     }
 
-    public SpannableString highlight(SpannableString spannableString, VerseBounds verseBounds, int colorInt) {
-        ForegroundColorSpan colorSpan = new ForegroundColorSpan(colorInt);
-        spannableString.setSpan(colorSpan, verseBounds.getStart(), verseBounds.getEnd(), 0);
-        return spannableString;
-    }
-
     public void saveHighlight(int chapter, VerseBounds verseBounds, int colorInt) {
         write(new HighlightInfo(chapter, verseBounds, colorInt));
     }
@@ -87,23 +79,28 @@ public class Highlighter {
              * -S{SPACE}int{SPACE}int{SPACE}int{SPACE}int{SPACE}
              * start tag, chapter, start bound, end bound, color
              */
+            ArrayList<HighlightInfo> highlightInfos = getHighlights();
+            highlightInfos.add(highlightInfo);
             FileOutputStream fileOutputStream = context.openFileOutput(FILE_NAME, Context.MODE_PRIVATE);
             byte[] bytesSpace = SPACE.getBytes();
             byte[] bytesStartTag = START_TAG.getBytes();
-            byte[] bytesChapter = Integer.toString(highlightInfo.getChapter()).getBytes();
-            byte[] bytesStartBound = Integer.toString(highlightInfo.getVerseBounds().getStart()).getBytes();
-            byte[] bytesEndBound = Integer.toString(highlightInfo.getVerseBounds().getEnd()).getBytes();
-            byte[] bytesColor = (Integer.toString(highlightInfo.getColorInt())).getBytes();
-            fileOutputStream.write(bytesStartTag);
-            fileOutputStream.write(bytesSpace);
-            fileOutputStream.write(bytesChapter);
-            fileOutputStream.write(bytesSpace);
-            fileOutputStream.write(bytesStartBound);
-            fileOutputStream.write(bytesSpace);
-            fileOutputStream.write(bytesEndBound);
-            fileOutputStream.write(bytesSpace);
-            fileOutputStream.write(bytesColor);
-            fileOutputStream.write(bytesSpace);
+            for (HighlightInfo h : highlightInfos) {
+                byte[] bytesChapter = Integer.toString(h.getChapter()).getBytes();
+                byte[] bytesStartBound = Integer.toString(h.getVerseBounds().getStart()).getBytes();
+                byte[] bytesEndBound = Integer.toString(h.getVerseBounds().getEnd()).getBytes();
+                byte[] bytesColor = (Integer.toString(h.getColorInt())).getBytes();
+                fileOutputStream.write(bytesStartTag);
+                fileOutputStream.write(bytesSpace);
+                fileOutputStream.write(bytesChapter);
+                fileOutputStream.write(bytesSpace);
+                fileOutputStream.write(bytesStartBound);
+                fileOutputStream.write(bytesSpace);
+                fileOutputStream.write(bytesEndBound);
+                fileOutputStream.write(bytesSpace);
+                fileOutputStream.write(bytesColor);
+                fileOutputStream.write(bytesSpace);
+            }
+            fileOutputStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -123,6 +120,7 @@ public class Highlighter {
                 sb.append((char) b);
             } while (b != EOF);
             highlightInfos = parseString(sb.toString());
+            fileInputStream.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

@@ -25,16 +25,18 @@ public class VerseClickableSpan extends ClickableSpan {
     }
 
     private void displayVerse(Context context, String ref, String verseText) {
-        AlertDialog verseDisplayDialog = new AlertDialog.Builder(context).
-                setTitle(ref).
-                setMessage(verseText).
-                setNegativeButton("CLOSE", null).
-                create();
-        verseDisplayDialog.setCanceledOnTouchOutside(true);
-        verseDisplayDialog.show();
+        //TODO call a Bible API in the method that follows, then uncomment the section below to display
+//        AlertDialog verseDisplayDialog = new AlertDialog.Builder(context).
+//                setTitle(ref).
+//                setMessage(verseText).
+//                setNegativeButton("CLOSE", null).
+//                create();
+//        verseDisplayDialog.setCanceledOnTouchOutside(true);
+//        verseDisplayDialog.show();
     }
 
     private String downloadVerseText(String clickedVerse) {
+        //TODO call a Bible API
         return "verse text";
     }
 }

@@ -28,19 +28,28 @@
             android:id="@+id/search_search"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_search" />
+            android:contentDescription="click to search"
+            android:src="@drawable/ic_search"
+            android:tint="#ffffff" />
     </LinearLayout>
 
-    <TextView
+    <LinearLayout
+        android:id="@+id/search_results"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:labelFor="@id/search_results_list"
-        android:text="search results:" />
+        android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/search_results_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:labelFor="@id/search_results_list"
+            android:text="search results:" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/search_results_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 </LinearLayout>

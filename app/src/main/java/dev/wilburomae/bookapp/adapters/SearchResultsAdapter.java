@@ -28,7 +28,7 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = mLayoutInflater.inflate(R.layout.main_recycler_entry, parent, false);
+        View view = mLayoutInflater.inflate(R.layout.search_recycler_entry, parent, false);
         return new ViewHolder(view);
     }
 
@@ -54,9 +54,9 @@ public class SearchResultsAdapter extends RecyclerView.Adapter<SearchResultsAdap
 
         private ViewHolder(View itemView) {
             super(itemView);
-            cardView = itemView.findViewById(R.id.main_recycler_card);
-            txtTitle = itemView.findViewById(R.id.main_recycler_card_title);
-            txtIntro = itemView.findViewById(R.id.main_recycler_card_intro);
+            cardView = itemView.findViewById(R.id.search_recycler_card);
+            txtTitle = itemView.findViewById(R.id.search_recycler_card_title);
+            txtIntro = itemView.findViewById(R.id.search_recycler_card_intro);
             cardView.setOnClickListener(mOnClickListener);
         }
     }
