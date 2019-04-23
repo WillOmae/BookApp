@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import dev.wilburomae.bookapp.R;
-import dev.wilburomae.bookapp.dataaccesslayer.Formatter;
 import dev.wilburomae.bookapp.dataaccesslayer.Highlighter;
 import dev.wilburomae.bookapp.dataaccesslayer.VerseBounds;
 import dev.wilburomae.bookapp.dataaccesslayer.models.Chapter;
@@ -48,6 +47,7 @@ public class ReaderPagerAdapter extends PagerAdapter {
     private ViewPager mViewPager = null;
     private VerseBounds mHighlightBounds = null;
     private ReaderActivity mReaderActivity;
+    private boolean mCanAccessInternet;
 
     public ReaderPagerAdapter(ReaderActivity readerActivity, Chapter[] chapters) {
         SimplifiedDoubleClickListener doubleClickListener = new SimplifiedDoubleClickListener();
@@ -59,6 +59,7 @@ public class ReaderPagerAdapter extends PagerAdapter {
         this.mGestureDetector.setOnDoubleTapListener(doubleClickListener);
         this.mRestoredHighlights = mHighlighter.getHighlights();
         this.mReaderActivity.showHighlightButton(false);
+        this.mCanAccessInternet = readerActivity.getInternetPermission();
     }
 
     @Override
@@ -99,12 +100,12 @@ public class ReaderPagerAdapter extends PagerAdapter {
         Chapter chapter = mChapters[position];
         View view = this.mLayoutInflater.inflate(R.layout.reader_fragment_content, container, false);
 
-        TextView tvContent = (TextView) view.findViewById(R.id.reader_fragment_content_textView);
-        TextView tvTitle = (TextView) view.findViewById(R.id.reader_fragment_content_title);
+        TextView tvContent = view.findViewById(R.id.reader_fragment_content_textView);
+        TextView tvTitle = view.findViewById(R.id.reader_fragment_content_title);
 
         tvTitle.setText(chapter.getChapterIntro());
         tvContent.setMovementMethod(LinkMovementMethod.getInstance());
-        tvContent.setText(Formatter.format(new SpannableString(chapter.getChapterContent())));
+        tvContent.setText(chapter.getChapterContentFormatted());
 
         tvContent.setOnTouchListener(new View.OnTouchListener() {
             @Override

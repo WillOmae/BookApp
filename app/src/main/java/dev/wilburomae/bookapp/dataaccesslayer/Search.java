@@ -2,8 +2,8 @@ package dev.wilburomae.bookapp.dataaccesslayer;
 
 import android.graphics.Color;
 import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.style.BackgroundColorSpan;
+import android.text.style.ForegroundColorSpan;
 
 import java.util.ArrayList;
 
@@ -63,20 +63,26 @@ public class Search {
         for (int i = 0; i < chapters.length; i++) {
             Chapter chapter = chapters[i];
             String content = chapter.getChapterContent();
-            int needleIndex = content.indexOf(needle);
+            // use lower case for case insensitivity
+            String needleLowerCase = needle.toLowerCase();
+            int needleIndex = content.toLowerCase().indexOf(needleLowerCase);
             if (needleIndex != -1) {
                 VerseBounds refBounds = findRefBounds(needleIndex, content);
                 VerseBounds snippetBounds = findSnippetBounds(needleIndex, content);
 
                 String ref = (refBounds != null) ? content.substring(refBounds.getStart(), refBounds.getEnd()) : null;
-                String snippet = (refBounds != null) ? String.format("...%s...", content.substring(snippetBounds.getStart(), snippetBounds.getEnd())) : null;
-                SpannableString spannedSnippet = new SpannableString(snippet);
+                String snippet = (snippetBounds != null) ? String.format("...%s...", content.substring(snippetBounds.getStart(), snippetBounds.getEnd())) : null;
+                if (snippet != null) {
+                    SpannableString spannedSnippet = new SpannableString(snippet);
+                    String snippetLowerCase = snippet.toLowerCase();
 
-                int highlightStart = snippet.indexOf(needle);
-                int highlightEnd = highlightStart + needle.length();
-                spannedSnippet.setSpan(new BackgroundColorSpan(Color.YELLOW), highlightStart, highlightEnd, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    int highlightStart = snippetLowerCase.indexOf(needleLowerCase);
+                    int highlightEnd = highlightStart + needle.length();
+                    spannedSnippet.setSpan(new BackgroundColorSpan(Color.YELLOW), highlightStart, highlightEnd, 0);
+                    spannedSnippet.setSpan(new ForegroundColorSpan(Color.DKGRAY), highlightStart, highlightEnd, 0);
 
-                searchResults.add(new SearchResult(needle, chapter.getChapterTitle(), ref, spannedSnippet, i));
+                    searchResults.add(new SearchResult(needle, chapter.getChapterTitle(), ref, spannedSnippet, i));
+                }
             }
         }
         return searchResults;

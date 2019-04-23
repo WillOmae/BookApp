@@ -12,10 +12,9 @@ public class AboutDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("This app...");
-        builder.setMessage("...was developed to point every troubled heart to Jesus the Way, " +
-                "making use of text from a translation of the best-selling book 'Steps to Christ' by Ellen Gould White. " +
-                "Many thanks to W. O. and J. O.\n\n" +
+        builder.setTitle("Njia Salama");
+        builder.setMessage("This application was developed to direct troubled hearts to Jesus the Way, making use of text from a translation of the best-selling book 'Steps to Christ' by Ellen Gould White.\n\n" +
+                "Many thanks to Wilbur Omae and Job Omenta.\n\n" +
                 "From the developers: softtech4mobile@gmail.com");
         builder.setCancelable(true);
         return builder.create();

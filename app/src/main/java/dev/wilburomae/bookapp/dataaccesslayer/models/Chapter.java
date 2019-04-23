@@ -1,5 +1,7 @@
 package dev.wilburomae.bookapp.dataaccesslayer.models;
 
+import android.text.SpannableString;
+
 import java.util.ArrayList;
 
 /**
@@ -10,6 +12,7 @@ public class Chapter {
     private String chapterTitle;
     private String chapterIntro;
     private String chapterContent;
+    private SpannableString chapterContentFormatted = null;
     private static Chapter[] mChapters = null;
 
     public static ArrayList<String> lines = null;
@@ -51,6 +54,14 @@ public class Chapter {
 
     public void setChapterContent(String chapterContent) {
         this.chapterContent = chapterContent;
+    }
+
+    public SpannableString getChapterContentFormatted() {
+        return (chapterContentFormatted == null) ? SpannableString.valueOf(chapterContent) : chapterContentFormatted;
+    }
+
+    public void setChapterContentFormatted(SpannableString chapterContentFormatted) {
+        this.chapterContentFormatted = chapterContentFormatted;
     }
 
     public static Chapter get(int chapterId) {

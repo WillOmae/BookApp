@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/reader.fab.highlight.blue"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:background="@color/highlight_cyan"
+        android:contentDescription="@string/color_blue" />
+
+    <ImageView
+        android:id="@+id/reader.fab.highlight.red"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:background="@color/highlight_magenta"
+        android:contentDescription="@string/color_red" />
+
+    <ImageView
+        android:id="@+id/reader.fab.highlight.green"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:background="@color/highlight_green"
+        android:contentDescription="@string/color_green" />
+
+    <ImageView
+        android:id="@+id/reader.fab.highlight.yellow"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="5dp"
+        android:background="@color/highlight_yellow"
+        android:contentDescription="@string/color_yellow" />
+
+</LinearLayout>

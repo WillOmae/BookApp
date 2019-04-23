@@ -1,8 +1,13 @@
 package dev.wilburomae.bookapp.views;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatImageView;
@@ -24,6 +29,7 @@ public class ReaderActivity extends AppCompatActivity implements View.OnClickLis
     private ColorDialogFragment mColorDialogFragment;
     private FloatingActionButton mHighlightButton;
     private TextView mToolbarText;
+    private boolean mCanAccessInternet = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +40,12 @@ public class ReaderActivity extends AppCompatActivity implements View.OnClickLis
         Bundle extras = prevIntent.getExtras();
         int position = extras.getInt("POSITION");
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.reader_toolbar);
+        Toolbar toolbar = findViewById(R.id.reader_toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-        mToolbarText = (TextView) findViewById(R.id.reader_toolbar_text);
+        mToolbarText = findViewById(R.id.reader_toolbar_text);
         setToolbarText("");
 
         mHighlightButton = findViewById(R.id.reader_fab_highlight);
@@ -56,6 +62,11 @@ public class ReaderActivity extends AppCompatActivity implements View.OnClickLis
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.setCurrentItem(position);
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, 0);
+        } else {
+            mCanAccessInternet = true;
+        }
     }
 
     public void setToolbarText(String text) {
@@ -65,6 +76,10 @@ public class ReaderActivity extends AppCompatActivity implements View.OnClickLis
     public void showHighlightButton(boolean toShow) {
         if (toShow) mHighlightButton.show();
         else mHighlightButton.hide();
+    }
+
+    public boolean getInternetPermission() {
+        return mCanAccessInternet;
     }
 
     @Override
@@ -105,6 +120,13 @@ public class ReaderActivity extends AppCompatActivity implements View.OnClickLis
         } else if (v.getClass().equals(CardView.class)) {
             mSearchDialogFragment.getDialog().cancel();
             mViewPager.setCurrentItem(Integer.parseInt(v.getTag().toString()));
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        if (requestCode == 0 && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            mCanAccessInternet = true;
         }
     }
 }

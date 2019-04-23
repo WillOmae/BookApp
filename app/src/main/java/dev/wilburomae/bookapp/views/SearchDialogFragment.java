@@ -34,21 +34,21 @@ public class SearchDialogFragment extends DialogFragment {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(getActivity());
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
         View layoutView = layoutInflater.inflate(R.layout.search, null);
-        final ImageButton searchButton = (ImageButton) layoutView.findViewById(R.id.search_search);
-        final LinearLayout linearLayout = (LinearLayout) layoutView.findViewById(R.id.search_results);
+        final ImageButton searchButton = layoutView.findViewById(R.id.search_search);
+        final LinearLayout linearLayout = layoutView.findViewById(R.id.search_results);
         linearLayout.setVisibility(View.GONE);
         mContext = getActivity().getApplicationContext();
 
-        mSearchInput = (EditText) layoutView.findViewById(R.id.search_text);
-        RecyclerView mResultsList = (RecyclerView) layoutView.findViewById(R.id.search_results_list);
+        mSearchInput = layoutView.findViewById(R.id.search_text);
+        RecyclerView mResultsList = layoutView.findViewById(R.id.search_results_list);
         RecyclerView.LayoutManager mResultsLayoutManager = new LinearLayoutManager(mContext);
         mResultsAdapter = new SearchResultsAdapter(mContext, mResultSet, (View.OnClickListener) getActivity());
         mResultsList.setHasFixedSize(true);
         mResultsList.setLayoutManager(mResultsLayoutManager);
         mResultsList.setAdapter(mResultsAdapter);
 
-        dialogBuilder.setTitle("SEARCH");
-        dialogBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+        dialogBuilder.setTitle("Search");
+        dialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 getDialog().cancel();

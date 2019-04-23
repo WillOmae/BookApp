@@ -21,14 +21,15 @@ public class ColorDialogFragment extends DialogFragment {
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
         View layoutView = layoutInflater.inflate(R.layout.color_dialog, null);
         ImageView[] highlightButtons = new ImageView[4];
-        highlightButtons[0] = (ImageView) layoutView.findViewById(R.id.reader_fab_highlight_blue);
-        highlightButtons[1] = (ImageView) layoutView.findViewById(R.id.reader_fab_highlight_red);
-        highlightButtons[2] = (ImageView) layoutView.findViewById(R.id.reader_fab_highlight_green);
-        highlightButtons[3] = (ImageView) layoutView.findViewById(R.id.reader_fab_highlight_yellow);
+        highlightButtons[0] = layoutView.findViewById(R.id.reader_fab_highlight_blue);
+        highlightButtons[1] = layoutView.findViewById(R.id.reader_fab_highlight_red);
+        highlightButtons[2] = layoutView.findViewById(R.id.reader_fab_highlight_green);
+        highlightButtons[3] = layoutView.findViewById(R.id.reader_fab_highlight_yellow);
         for (int i = 0; i < 4; i++) {
             highlightButtons[i].setOnClickListener(readerActivity);
         }
 
+        builder.setTitle("Highlight colour");
         builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

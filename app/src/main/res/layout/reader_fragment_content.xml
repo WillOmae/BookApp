@@ -16,6 +16,7 @@
             android:id="@+id/reader.fragment.content.title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textIsSelectable="true"
             android:padding="5dp"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -26,6 +27,7 @@
             style="?android:textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textIsSelectable="true"
             android:padding="16dp"
             android:textColor="#505050"/>
     </LinearLayout>
